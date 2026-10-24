@@ -1,0 +1,32 @@
+# Build output
+build/
+out/
+cmake-build-*/
+CMakeUserPresets.json
+compile_commands.json
+.cache/
+
+# vcpkg
+vcpkg_installed/
+
+# Market data (multi-GB, never committed; see docs/DATA.md)
+data/*
+!data/README.md
+*.itch
+*.ITCH50
+*.gz
+
+# Profiling and fuzzing artifacts
+perf.data*
+*.svg.tmp
+crash-*
+leak-*
+timeout-*
+oom-*
+fuzz/corpus/
+
+# Editors and OS
+.vscode/
+.idea/
+*.swp
+.DS_Store

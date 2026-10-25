@@ -41,6 +41,25 @@ data/           local ITCH files (git-ignored)
 | 5 | Profiling and optimization, differential testing |
 | 6 | Design write-up and final results |
 
+## Build
+
+Requirements: a C++20 compiler (GCC 13+, Clang 16+ or Apple Clang 15+), CMake 3.25+, Ninja, and [vcpkg](https://github.com/microsoft/vcpkg) with `VCPKG_ROOT` pointing at its checkout. Dependencies are declared in [`vcpkg.json`](vcpkg.json) (manifest mode, pinned with `builtin-baseline`) and installed automatically at configure time.
+
+```sh
+cmake --workflow --preset debug     # configure + build + test in build/debug
+cmake --workflow --preset release   # same, optimized, in build/release
+```
+
+Or step by step:
+
+```sh
+cmake --preset debug
+cmake --build --preset debug
+ctest --preset debug
+```
+
+The first configure builds GoogleTest from source through vcpkg; later configures reuse vcpkg's binary cache.
+
 ## Data
 
 ITCH sample files are large and are not stored in this repository. See [`docs/DATA.md`](docs/DATA.md) for where to download them and where to put them.

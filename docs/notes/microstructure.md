@@ -133,9 +133,16 @@ D ref3                 Bid 100.01: ref8 100
 ```
 On A/F:  orders[ref] = { locate, side, price, shares }
 On E:    o = orders[ref]; o.shares -= executed   // trade at o.price
-On X:    orders[ref].shares -= cancelled
+         if o.shares == 0: remove ref from its level and the map
+On X:    o = orders[ref]; o.shares -= cancelled
+         if o.shares == 0: remove ref from its level and the map
 On D:    remove orders[ref] from its level and the map
-On U:    remove old ref; add new ref at the back of the new price level
+On U:    old = orders[old_ref]                    // U has no side field
+         add new_ref = { old.locate, old.side, new price, new shares }
+           at the back of the new price level
+         remove old_ref from its level and the map
 ```
+
+A fully executed or fully cancelled order gets no separate `D` message, so the handler must remove it itself when its shares reach 0.
 
 One book per Stock Locate, and one map from order ref → order across the whole feed.
